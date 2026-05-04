@@ -15,7 +15,7 @@ const userLinks = [
   { to: '/apply-loan',        icon: RiFileAddLine,      label: 'Apply for Loan' },
   { to: '/my-applications',   icon: RiFileListLine,     label: 'My Applications' },
   { to: '/upload-documents',  icon: RiUploadCloud2Line, label: 'Upload Documents' },
-  { to: '/status',            icon: RiTimeLine,         label: 'Status Tracking' },
+  { to: '/status',            icon: RiShieldCheckLine,    label: 'KYC Status' },
 ]
 
 const adminLinks = [
@@ -65,7 +65,9 @@ const Sidebar = ({ open, onClose }) => {
                     stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <span className={`text-xl font-bold font-display gradient-text`}>FinFlow</span>
+              <span className={`text-xl font-bold font-display ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Fin<span className="gradient-text">Flow</span>
+              </span>
             </div>
             <button onClick={onClose}
               className={`p-1.5 rounded-lg transition-colors ${isDark ? 'hover:bg-white/10 text-slate-400' : 'hover:bg-slate-100 text-slate-500'}`}>

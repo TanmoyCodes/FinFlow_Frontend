@@ -18,15 +18,15 @@ export const CTA = () => (
           Ready to simplify your <br />
           <span className="gradient-text">loan journey?</span>
         </h2>
-        <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
           Join 1,200+ financial institutions transforming their operations with FinFlow's intelligent microservices.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4 relative z-10">
-          <Link to="/signup" className="w-full sm:w-auto px-10 py-5 bg-white text-dark-900 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-white/10">
+          <Link to="/signup" className="w-full sm:w-auto px-10 py-5 bg-primary-600 dark:bg-white text-white dark:text-dark-900 rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-primary-600/20 dark:shadow-white/10 transition-all hover:scale-105 active:scale-95">
             Create Free Account
           </Link>
-          <Link to="/login" className="w-full sm:w-auto px-10 py-5 glass-card rounded-2xl font-bold text-lg border border-white/10 hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+          <Link to="/login" className="w-full sm:w-auto px-10 py-5 glass-card rounded-2xl font-bold text-lg border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10 transition-all flex items-center justify-center gap-2 text-slate-800 dark:text-slate-200">
             Sign In to Dashboard
             <FiArrowRight />
           </Link>
@@ -37,7 +37,7 @@ export const CTA = () => (
 )
 
 export const Footer = () => (
-  <footer className="py-20 border-t border-white/5 px-6 relative overflow-hidden">
+  <footer className="py-20 border-t border-slate-200 dark:border-white/5 px-6 relative overflow-hidden">
     <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-500/5 rounded-full blur-[100px]"></div>
     
     <div className="max-w-7xl mx-auto">
@@ -53,46 +53,46 @@ export const Footer = () => (
             The next generation of financial microservices. Secure, fast, and intelligent automation for modern institutions.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-white transition-colors"><FiGithub /></a>
-            <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-white transition-colors"><FiLinkedin /></a>
-            <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-white transition-colors"><FiTwitter /></a>
+            <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-primary-600 dark:hover:text-white transition-colors"><FiGithub /></a>
+            <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-primary-600 dark:hover:text-white transition-colors"><FiLinkedin /></a>
+            <a href="#" className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-primary-600 dark:hover:text-white transition-colors"><FiTwitter /></a>
           </div>
         </div>
 
         <div>
-          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-slate-300">Product</h4>
+          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-slate-900 dark:text-slate-300">Product</h4>
           <ul className="space-y-4 text-slate-500 text-sm">
-            <li><a href="#features" className="hover:text-primary-400">Features</a></li>
-            <li><a href="#security" className="hover:text-primary-400">Security</a></li>
-            <li><a href="#analytics" className="hover:text-primary-400">Analytics</a></li>
-            <li><a href="#pricing" className="hover:text-primary-400">Pricing</a></li>
+            <li><a href="#features" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Features</a></li>
+            <li><a href="#security" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Security</a></li>
+            <li><a href="#analytics" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Analytics</a></li>
+            <li><a href="#pricing" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Pricing</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-slate-300">Company</h4>
+          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-slate-900 dark:text-slate-300">Company</h4>
           <ul className="space-y-4 text-slate-500 text-sm">
-            <li><a href="#" className="hover:text-primary-400">About Us</a></li>
-            <li><a href="#" className="hover:text-primary-400">Careers</a></li>
-            <li><a href="#" className="hover:text-primary-400">Contact</a></li>
+            <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About Us</a></li>
+            <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Careers</a></li>
+            <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Contact</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-slate-300">Legal</h4>
+          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-slate-900 dark:text-slate-300">Legal</h4>
           <ul className="space-y-4 text-slate-500 text-sm">
-            <li><a href="#" className="hover:text-primary-400">Privacy</a></li>
-            <li><a href="#" className="hover:text-primary-400">Terms</a></li>
-            <li><a href="#" className="hover:text-primary-400">Cookie Policy</a></li>
+            <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Privacy</a></li>
+            <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Terms</a></li>
+            <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-white/5 text-slate-600 text-sm">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-slate-200 dark:border-white/5 text-slate-500 text-sm">
         <p>© 2026 FinFlow Financial Systems. All rights reserved.</p>
         <div className="flex gap-8">
-          <a href="#" className="hover:text-white">System Status</a>
-          <a href="#" className="hover:text-white">API Documentation</a>
+          <a href="#" className="hover:text-primary-600 dark:hover:text-white transition-colors">System Status</a>
+          <a href="#" className="hover:text-primary-600 dark:hover:text-white transition-colors">API Documentation</a>
         </div>
       </div>
     </div>

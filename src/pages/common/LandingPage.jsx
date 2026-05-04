@@ -47,32 +47,42 @@ const LandingPage = () => {
       <Navbar />
       
       <main>
-        <Hero />
+        <div className="snap-section">
+          <Hero />
+        </div>
         
-        <div id="features">
+        <div id="features" className="snap-section">
            <Features />
         </div>
 
-        <InteractiveSection />
+        <div className="snap-section">
+          <InteractiveSection />
+        </div>
         
-        <div id="security">
+        <div id="security" className="snap-section">
            <Security />
         </div>
 
-        <div id="analytics">
+        <div id="analytics" className="snap-section">
            <Analytics />
         </div>
 
-        <Testimonials />
+        <div className="snap-section">
+          <Testimonials />
+        </div>
 
-        <div id="pricing">
+        <div id="pricing" className="snap-section">
            <Pricing />
         </div>
 
-        <CTA />
+        <div className="snap-section">
+          <CTA />
+        </div>
       </main>
 
-      <Footer />
+      <div className="snap-end">
+        <Footer />
+      </div>
 
       {/* Floating Blobs (Background) */}
       <div className="fixed top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary-500/5 rounded-full blur-[150px] pointer-events-none z-0"></div>

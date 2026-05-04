@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { RiCheckLine, RiCloseLine, RiSearchLine, RiFilterLine, RiEyeLine } from 'react-icons/ri'
+import { RiCheckLine, RiCloseLine, RiSearchLine, RiFilterLine, RiEyeLine, RiFileSearchLine } from 'react-icons/ri'
 import PageHeader from '../../components/common/PageHeader'
 import Badge from '../../components/common/Badge'
 import Button from '../../components/common/Button'
@@ -21,6 +21,9 @@ const AdminApplications = () => {
   const [selectedApp, setSelectedApp] = useState(null)
   const [userProfile, setUserProfile] = useState(null)
   const [allUsers, setAllUsers] = useState([])
+  const [docInfo, setDocInfo] = useState(null)
+  const [pdfUrl, setPdfUrl] = useState(null)
+  const [pdfLoading, setPdfLoading] = useState(false)
 
   useEffect(() => {
     // Fetch all users once to avoid individual lookup issues
@@ -33,10 +36,32 @@ const AdminApplications = () => {
     if (selectedApp && allUsers.length > 0) {
       const profile = allUsers.find(u => u.email === selectedApp.email)
       setUserProfile(profile)
+      
+      // Fetch Document Status
+      api.get(`/documents/status/${selectedApp.email}`)
+        .then(({ data }) => setDocInfo(data))
+        .catch(() => setDocInfo(null))
     } else {
       setUserProfile(null)
+      setDocInfo(null)
+      setPdfUrl(null)
     }
   }, [selectedApp, allUsers])
+
+  const previewDocument = () => {
+    if (!selectedApp?.email) return
+    setPdfLoading(true)
+    api.get(`/documents/admin/download/${selectedApp.email}`, { responseType: 'blob' })
+      .then(response => {
+        const url = URL.createObjectURL(response.data)
+        setPdfUrl(url)
+      })
+      .catch(err => {
+        toast.error("Failed to load document preview")
+        console.error(err)
+      })
+      .finally(() => setPdfLoading(false))
+  }
 
   const fetchAll = () => {
     setLoading(true)
@@ -190,11 +215,61 @@ const AdminApplications = () => {
 
               <div className="col-span-2">
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Employment Info</p>
-                <div className={`p-4 rounded-xl grid grid-cols-2 gap-4 ${isDark ? 'bg-white/05' : 'bg-slate-50'}`}>
-                  <p><span className="text-xs text-slate-400 block mb-0.5">Occupation:</span> <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{userProfile?.occupation || selectedApp.occupation || '—'}</span></p>
-                  <p><span className="text-xs text-slate-400 block mb-0.5">Employer:</span> <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{userProfile?.employerName || selectedApp.employerName || '—'}</span></p>
-                  <p><span className="text-xs text-slate-400 block mb-0.5">Income:</span> <span className={`text-sm font-medium text-green-500`}>{(userProfile?.income || selectedApp.income) ? `₹${Number(userProfile?.income || selectedApp.income).toLocaleString('en-IN')}` : '—'}</span></p>
-                  <p><span className="text-xs text-slate-400 block mb-0.5">Experience:</span> <span className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{userProfile?.workExperience || selectedApp.workExperience ? `${userProfile?.workExperience || selectedApp.workExperience} years` : '—'}</span></p>
+                <div className={`p-4 rounded-xl grid grid-cols-2 md:grid-cols-4 gap-4 ${isDark ? 'bg-white/05' : 'bg-slate-50'}`}>
+                  <div className="md:col-span-1">
+                    <p className="text-[10px] text-slate-400 uppercase tracking-tight mb-0.5">Occupation</p>
+                    <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{userProfile?.occupation || selectedApp.occupation || '—'}</p>
+                  </div>
+                  <div className="md:col-span-1">
+                    <p className="text-[10px] text-slate-400 uppercase tracking-tight mb-0.5">Employer</p>
+                    <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{userProfile?.employerName || selectedApp.employerName || '—'}</p>
+                  </div>
+                  <div className="md:col-span-1">
+                    <p className="text-[10px] text-slate-400 uppercase tracking-tight mb-0.5">Income</p>
+                    <p className={`text-sm font-medium text-green-500`}>{(userProfile?.income || selectedApp.income) ? `₹${Number(userProfile?.income || selectedApp.income).toLocaleString('en-IN')}` : '—'}</p>
+                  </div>
+                  <div className="md:col-span-1">
+                    <p className="text-[10px] text-slate-400 uppercase tracking-tight mb-0.5">Experience</p>
+                    <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{userProfile?.workExperience || selectedApp.workExperience ? `${userProfile?.workExperience || selectedApp.workExperience} years` : '—'}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-span-2">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Verification Documents</p>
+                <div className={`p-4 rounded-xl flex flex-col gap-4 ${isDark ? 'bg-white/05' : 'bg-slate-50'}`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${isDark ? 'bg-blue-500/10' : 'bg-blue-50'}`}>
+                        <RiFileSearchLine size={20} className="text-blue-500" />
+                      </div>
+                      <div>
+                        <p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-slate-800'}`}>{docInfo?.fileName || 'User Documents'}</p>
+                        <p className="text-[10px] text-slate-500 uppercase tracking-tight">{docInfo?.status ? `Status: ${docInfo.status}` : 'No documents uploaded'}</p>
+                      </div>
+                    </div>
+                    {docInfo && (
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        icon={RiEyeLine}
+                        onClick={previewDocument}
+                        loading={pdfLoading}
+                      >
+                        {pdfUrl ? 'Refresh Preview' : 'Preview Document'}
+                      </Button>
+                    )}
+                  </div>
+
+                  {pdfUrl && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }} 
+                      animate={{ opacity: 1, height: 400 }}
+                      className="w-full border border-inherit rounded-xl overflow-hidden bg-white"
+                    >
+                      <iframe src={pdfUrl} className="w-full h-full border-0" title="Document Preview" />
+                    </motion.div>
+                  )}
                 </div>
               </div>
             </div>

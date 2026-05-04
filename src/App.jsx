@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
+import { Toaster, ToastBar, toast } from 'react-hot-toast'
+import { RiCloseLine } from 'react-icons/ri'
 
 // Store
 import useThemeStore from './store/themeStore'
@@ -45,7 +46,7 @@ const App = () => {
       <Toaster
         position="top-right"
         toastOptions={{
-          duration: 3500,
+          duration: 4000,
           style: {
             background: isDark ? '#162032' : '#fff',
             color: isDark ? '#e2e8f0' : '#334155',
@@ -53,11 +54,34 @@ const App = () => {
             borderRadius: '12px',
             fontSize: '13px',
             fontFamily: 'Inter, sans-serif',
+            padding: '4px 12px',
           },
           success: { iconTheme: { primary: '#22c55e', secondary: '#fff' } },
           error:   { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
         }}
-      />
+      >
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <>
+                {icon}
+                <div className="flex-1 px-1">{message}</div>
+                {t.type !== 'loading' && (
+                  <button
+                    type="button"
+                    onClick={() => toast.dismiss(t.id)}
+                    className={`p-1.5 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/10 ${
+                      isDark ? 'text-slate-500 hover:text-white' : 'text-slate-400 hover:text-slate-600'
+                    }`}
+                  >
+                    <RiCloseLine size={16} />
+                  </button>
+                )}
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
 
       <BrowserRouter>
         <Routes>

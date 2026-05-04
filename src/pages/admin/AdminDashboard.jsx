@@ -11,6 +11,7 @@ import {
 import StatCard from '../../components/common/StatCard'
 import PageHeader from '../../components/common/PageHeader'
 import { CardSkeleton } from '../../components/common/LoadingSkeleton'
+import useAuthStore from '../../store/authStore'
 import useThemeStore from '../../store/themeStore'
 import api from '../../api/axios'
 import toast from 'react-hot-toast'
@@ -22,8 +23,19 @@ const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }
 
 const AdminDashboard = () => {
   const { isDark } = useThemeStore()
-  const [stats, setStats]   = useState(null)
+  const { user } = useAuthStore()
+  const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+    if (hour >= 5 && hour < 12) return 'Good Morning'
+    if (hour >= 12 && hour < 17) return 'Good Afternoon'
+    if (hour >= 17 && hour < 22) return 'Good Evening'
+    return 'Good Night'
+  }
+
+  const firstName = user?.name?.split(' ')[0] || 'Admin'
 
   useEffect(() => {
     api.get('/application/admin/stats')
@@ -60,7 +72,10 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <PageHeader title="Admin Dashboard" subtitle="Platform overview and key metrics" />
+      <PageHeader 
+        title={`${getGreeting()}, ${firstName}! 🛡️`} 
+        subtitle="Here's a high-level overview of the platform performance." 
+      />
 
       {loading ? <CardSkeleton count={4} /> : (
         <motion.div variants={container} initial="hidden" animate="show"

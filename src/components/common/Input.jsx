@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import useThemeStore from '../../store/themeStore'
 
-const Input = forwardRef(({ label, error, icon: Icon, className = '', ...props }, ref) => {
+const Input = forwardRef(({ label, error, icon: Icon, suffix: Suffix, className = '', ...props }, ref) => {
   const { isDark } = useThemeStore()
 
   return (
@@ -21,6 +21,7 @@ const Input = forwardRef(({ label, error, icon: Icon, className = '', ...props }
           ref={ref}
           className={`w-full px-3 py-2.5 rounded-xl text-sm outline-none transition-all duration-200
             ${Icon ? 'pl-10' : ''}
+            ${Suffix ? 'pr-10' : ''}
             ${error
               ? 'border-red-500/60 focus:border-red-500'
               : isDark
@@ -29,6 +30,11 @@ const Input = forwardRef(({ label, error, icon: Icon, className = '', ...props }
             }`}
           {...props}
         />
+        {Suffix && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+            {Suffix}
+          </div>
+        )}
       </div>
       {error && <p className="text-xs text-red-400">{error}</p>}
     </div>

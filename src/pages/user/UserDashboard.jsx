@@ -55,10 +55,20 @@ const UserDashboard = () => {
     { title: 'Rejected',           value: rejected, icon: RiCloseCircleLine,    color: 'red' },
   ]
 
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+    if (hour >= 5 && hour < 12) return 'Good Morning'
+    if (hour >= 12 && hour < 17) return 'Good Afternoon'
+    if (hour >= 17 && hour < 22) return 'Good Evening'
+    return 'Good Night'
+  }
+
+  const firstName = user?.name?.split(' ')[0] || 'User'
+
   return (
     <div>
       <PageHeader
-        title="My Dashboard"
+        title={`${getGreeting()}, ${firstName}! 👋`}
         subtitle="Track your loan applications at a glance"
         action={
           <Button icon={RiFileAddLine} onClick={() => navigate('/apply-loan')}>

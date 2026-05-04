@@ -125,24 +125,32 @@ const AdminStats = () => {
               <Tooltip contentStyle={tooltipStyle} />
             </PieChart>
           </ResponsiveContainer>
-          <div className="flex flex-col gap-3 flex-1">
-            {pieData.map((d, i) => (
-              <div key={i} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full" style={{ background: COLORS[i] }} />
-                  <span className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{d.name}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className={`w-32 h-2 rounded-full overflow-hidden ${isDark ? 'bg-white/08' : 'bg-slate-100'}`}>
-                    <div className="h-full rounded-full" style={{
-                      background: COLORS[i],
-                      width: `${pieData.reduce((a,b)=>a+b.value,0) ? (d.value / pieData.reduce((a,b)=>a+b.value,0)) * 100 : 0}%`
-                    }} />
+          <div className="flex flex-col gap-4 max-w-md flex-1">
+            {pieData.map((d, i) => {
+              const total = pieData.reduce((a, b) => a + b.value, 0)
+              const percentage = total ? Math.round((d.value / total) * 100) : 0
+              return (
+                <div key={i} className="flex items-center justify-between group">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full shadow-sm" style={{ background: COLORS[i] }} />
+                    <span className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{d.name}</span>
                   </div>
-                  <span className={`text-sm font-medium w-6 text-right ${isDark ? 'text-white' : 'text-slate-800'}`}>{d.value}</span>
+                  <div className="flex items-center gap-6">
+                    <div className={`w-32 h-2 rounded-full overflow-hidden ${isDark ? 'bg-white/08' : 'bg-slate-100'}`}>
+                      <motion.div 
+                        initial={{ width: 0 }} animate={{ width: `${percentage}%` }}
+                        className="h-full rounded-full" 
+                        style={{ background: COLORS[i] }} 
+                      />
+                    </div>
+                    <div className="flex flex-col items-end min-w-[32px]">
+                      <span className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>{d.value}</span>
+                      <span className="text-[10px] text-slate-500">{percentage}%</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </motion.div>

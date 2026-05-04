@@ -68,7 +68,7 @@ const AdminDocuments = () => {
   )
 
   const columns = [
-    { key: 'id',        label: '#',         render: (v) => `#${v}` },
+    { key: 'id',        label: '#',         render: (v, row, i) => `#${i + 1}` },
     { key: 'userName',  label: 'User Name', render: (v, row) => row.userName || row.userId },
     { key: 'email',     label: 'Email',     render: (v, row) => row.userId },
     {

@@ -21,9 +21,20 @@ const Login = () => {
 
   const validate = () => {
     const e = {}
-    if (!form.email.trim()) e.email = 'Email is required'
-    if (!form.password) e.password = 'Password is required'
-    else if (form.password.length < 6) e.password = 'At least 6 characters'
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    
+    if (!form.email.trim()) {
+      e.email = 'Email is required'
+    } else if (!emailRegex.test(form.email)) {
+      e.email = 'Please enter a valid email address'
+    }
+
+    if (!form.password) {
+      e.password = 'Password is required'
+    } else if (form.password.length < 6) {
+      e.password = 'Password must be at least 6 characters'
+    }
+
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -47,17 +58,17 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <div className={`rounded-2xl p-8 ${isDark ? 'glass-card' : 'glass-card-light shadow-xl'}`}>
-        <div className="mb-6">
-          <h2 className={`text-2xl font-bold font-display ${isDark ? 'text-white' : 'text-slate-800'}`}>
+      <div className="space-y-10 py-2">
+        <div>
+          <h2 className={`text-4xl font-bold font-display tracking-tight mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Welcome back
           </h2>
-          <p className={`text-sm mt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Sign in to your FinFlow account
+          <p className={`text-base font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Please enter your details to sign in to your account.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <Input
             label="Email Address"
             type="email"
@@ -68,44 +79,44 @@ const Login = () => {
             error={errors.email}
           />
 
-          <div className="flex flex-col gap-1.5">
-            <label className={`text-sm font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-              Password
-            </label>
-            <div className="relative">
-              <RiLockPasswordLine size={16}
-                className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />
-              <input
-                type={showPass ? 'text' : 'password'}
-                placeholder="••••••••"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                className={`w-full pl-10 pr-10 py-2.5 rounded-xl text-sm outline-none transition-all duration-200
-                  ${errors.password
-                    ? 'border-red-500/60 focus:border-red-500'
-                    : isDark
-                      ? 'bg-white/05 border border-white/10 text-white placeholder:text-slate-600 focus:border-blue-500/60 focus:bg-white/08'
-                      : 'bg-white border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 shadow-sm'
-                  }`}
-              />
-              <button type="button" onClick={() => setShowPass((p) => !p)}
-                className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}>
-                {showPass ? <RiEyeOffLine size={16} /> : <RiEyeLine size={16} />}
-              </button>
+          <div className="space-y-1">
+            <div className="flex justify-between items-center mb-1.5">
+              <label className={`text-sm font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                Password
+              </label>
+              <Link to="/forgot-password" size="xs" className="text-xs font-bold text-primary-500 hover:text-primary-600 transition-colors">
+                Forgot password?
+              </Link>
             </div>
-            {errors.password && <p className="text-xs text-red-400">{errors.password}</p>}
+            <Input
+              type={showPass ? 'text' : 'password'}
+              placeholder="••••••••"
+              icon={RiLockPasswordLine}
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              error={errors.password}
+              suffix={
+                <button 
+                  type="button" 
+                  onClick={() => setShowPass((p) => !p)}
+                  className={`p-1.5 rounded-md transition-colors ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-400 hover:text-slate-600'}`}
+                >
+                  {showPass ? <RiEyeOffLine size={18} /> : <RiEyeLine size={18} />}
+                </button>
+              }
+            />
           </div>
 
-          <Button type="submit" loading={loading} className="w-full mt-2" size="lg"
+          <Button type="submit" loading={loading} className="w-full h-12 text-base font-bold shadow-lg shadow-primary-500/20 mt-4"
             icon={!loading ? RiArrowRightLine : undefined}>
             Sign In
           </Button>
         </form>
 
-        <p className={`text-sm text-center mt-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-          Don't have an account?{' '}
-          <Link to="/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
-            Create one
+        <p className={`text-sm text-center mt-8 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+          Don't have an account yet?{' '}
+          <Link to="/signup" className="text-primary-500 hover:text-primary-600 font-bold transition-colors">
+            Create account
           </Link>
         </p>
       </div>

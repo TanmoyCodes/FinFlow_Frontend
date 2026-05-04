@@ -52,7 +52,7 @@ const DataTable = ({ columns, data, loading, emptyMessage = 'No data found' }) =
               >
                 {columns.map((col) => (
                   <td key={col.key} className={`px-4 py-3.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-                    {col.render ? col.render(row[col.key], row) : (
+                    {col.render ? col.render(row[col.key], row, i) : (
                       col.key === 'status' ? <Badge status={row[col.key]} /> : (row[col.key] ?? '—')
                     )}
                   </td>

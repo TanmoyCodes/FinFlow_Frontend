@@ -39,7 +39,7 @@ const Hero = () => {
             Automation.
           </h1>
 
-          <p className="text-lg text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
             Experience lightning-fast approvals and bank-grade security. Our platform automates the entire loan lifecycle for modern institutions.
           </p>
 
@@ -51,7 +51,7 @@ const Hero = () => {
                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
-            <Link to="/login" className="px-8 py-4 glass-card rounded-2xl font-bold flex items-center gap-3 border border-white/10 hover:bg-white/5 transition-all text-slate-200">
+            <Link to="/login" className="px-8 py-4 glass-card rounded-2xl font-bold flex items-center gap-3 border border-slate-200 dark:border-white/10 hover:bg-white/5 transition-all text-slate-800 dark:text-slate-200">
               <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
                 <FiPlay className="ml-1 w-3 h-3" />
               </div>
@@ -63,7 +63,7 @@ const Hero = () => {
           <div className="flex items-center gap-4 pt-2">
             <div className="flex -space-x-3">
               {avatars.map((url, i) => (
-                <div key={i} className="w-10 h-10 rounded-full border-4 border-dark-900 bg-dark-700 overflow-hidden">
+                <div key={i} className="w-10 h-10 rounded-full border-4 border-white dark:border-dark-900 bg-slate-100 dark:bg-dark-700 overflow-hidden">
                   <img src={url} alt="avatar" />
                 </div>
               ))}
@@ -85,7 +85,7 @@ const Hero = () => {
         >
           <div className="absolute -inset-4 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-2xl blur-2xl"></div>
           
-          <div className="relative glass-card rounded-2xl overflow-hidden border border-white/10 shadow-3xl">
+          <div className="relative glass-card-light dark:glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-3xl">
             <img 
               src="/finflow_app_mockup.png" 
               alt="Platform Dashboard" 
@@ -100,12 +100,12 @@ const Hero = () => {
             className="absolute -top-6 -right-6 p-4 glass-card rounded-2xl border border-white/10 shadow-2xl z-10 hidden xl:block"
           >
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-success-500/20 rounded-xl flex items-center justify-center">
-                <FiTrendingUp className="text-success-500 w-5 h-5" />
+              <div className="w-10 h-10 bg-success-500/10 dark:bg-success-500/20 rounded-xl flex items-center justify-center">
+                <FiTrendingUp className="text-success-600 dark:text-success-500 w-5 h-5" />
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Avg. Approval</p>
-                <p className="text-xl font-bold text-white">98.4%</p>
+                <p className="text-xl font-bold text-success-700 dark:text-white">98.4%</p>
               </div>
             </div>
           </motion.div>
@@ -118,11 +118,11 @@ const Hero = () => {
           >
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-primary-500/10 rounded-xl flex items-center justify-center">
-                <FiClock className="text-primary-400 w-5 h-5" />
+                <FiClock className="text-primary-600 dark:text-primary-400 w-5 h-5" />
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Process Time</p>
-                <p className="text-xl font-bold text-white">4.2 min</p>
+                <p className="text-xl font-bold text-primary-700 dark:text-white">4.2 min</p>
               </div>
             </div>
           </motion.div>
